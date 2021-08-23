@@ -8,22 +8,15 @@ title: |
 Contents {#contents .TOCHeading}
 ========
 
-[Abstract 2](#abstract)
+[Abstract](#abstract)
 
-[Architecture 2](#architecture)
+[Architecture](#architecture)
 
-[Document Links / References 3](#document-links-references)
+[Document Links](#Document-Links)
 
-[1. Setting up Pacemaker on SUSE Linux Enterprise Server in Azure](#setting-up-pacemaker-on-suse-linux-enterprise-server-in-azure)
-
-[2. Replace SBD device in a running Pacemaker Cluster.](#replace-sbd-device-in-a-running-pacemaker-cluster.)
-
-[Detailed Steps 4](#detailed-steps)
+[Detailed Steps](#detailed-steps)
 
 [Set up the new iSCSI Target Servers](#set-up-the-new-iscsi-target-servers)
-
-[Make a note of the existing Cluster Nodes IQN's (aka initiator IQNs --
-dbvm01, dbvm02)](#_Toc80118137)
 
 [Create iSCSI device on iSCSI target server.](#create-iscsi-device-on-iscsi-target-server.)
 
@@ -83,7 +76,7 @@ different tiers.
 | Central Instance | ascsvm01 ersvm01 |
 | Database | dbvm01 dbvm02 |
 
-# Document Links / References
+# Document Links
 
 All the steps listed in our document are taken from below documentation.
 
