@@ -1,11 +1,8 @@
----
-Title: |
-    How to switch SBD Devices (iSCSI Target VMs) for SLES Pacemaker Cluster
-    in Azure
-Authors: 'Ross Sponholtz, Momin Qureshi and Abbas Ali Mir'
----
+# How to switch SBD Devices (iSCSI Target VMs) for SLES Pacemaker Cluster in Azure 
 
-Contents {#contents .TOCHeading}
+**Authors:  Ross Sponholtz, Momin Qureshi and Abbas Ali Mir**
+
+**In this article**
 ========
 
 [Abstract](#abstract)
