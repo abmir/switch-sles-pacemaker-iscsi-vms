@@ -3,7 +3,6 @@
 **Authors:  Ross Sponholtz, Momin Qureshi and Abbas Ali Mir**
 
 **In this article**
-========
 
 [Abstract](#abstract)
 
