@@ -1,6 +1,6 @@
 ---
-subtitle: 'Authors: Ross Sponholtz, Momin Qureshi and Abbas Ali Mir'
-title: |
+Authors: 'Ross Sponholtz, Momin Qureshi and Abbas Ali Mir'
+Title: |
     How to switch SBD Devices (iSCSI Target VMs) for SLES Pacemaker Cluster
     in Azure
 ---
