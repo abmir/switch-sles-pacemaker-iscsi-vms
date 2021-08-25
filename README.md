@@ -178,7 +178,7 @@ InitiatorName=iqn.2006-04.dbvm02.local:dbvm02
 2.  Create the root folder for all SBD devices
 
 ```bash
-    sudo mkdir /sbd
+sudo mkdir /sbd
 ```
 
 
@@ -338,11 +338,11 @@ dbvm01:~ #
 The command list three device IDs for every SBD device. We recommend using the ID that starts with scsi-3, in the example above this is
 
 ```
- /dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15
+/dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15
 
- /dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7
+/dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7
 
- /dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a
+/dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a
 ```
 
 ### Initialize the SBD Device
@@ -474,15 +474,15 @@ b.  Run the watch command for new SBD Devices
 This step will start the SBD Watcher process for the 3 new SBD Device IDs. Run this on the two Cluster nodes (dbvm01, dbvm02)
 
 ```bash
-    dbvm01:~ # sbd -d
-    /dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15 -d
-    /dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 -d
-    /dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a watch
+dbvm01:~ # sbd -d
+/dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15 -d
+/dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 -d
+/dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a watch
 
-    dbvm02:~ # sbd -d
-    /dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15 -d
-    /dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 -d
-    /dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a watch
+dbvm02:~ # sbd -d
+/dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15 -d
+/dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 -d
+/dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a watch
 
 ```
 
@@ -491,77 +491,77 @@ This step will start the SBD Watcher process for the 3 new SBD Device IDs. Run t
 Show the status of the Cluster
 
 ```bash
-    crm_mon -r
+crm_mon -r
 
 # If the stonith-sbd device is in stopped state, then run the following command
 
-    crm resource start stonith-sbd
+crm resource start stonith-sbd
 
-    # Shows the SBD Watcher processes are running for the 3 new SBD Devices
+# Shows the SBD Watcher processes are running for the 3 new SBD Devices
 
-    dbvm01:~ # ps -aef | grep sbd
+dbvm01:~ # ps -aef | grep sbd
 
-    root 7751 10524 0 Jul06 ? 00:00:13 sbd: watcher:
-    /dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a - slot: 0 -
-    uuid: a5ccce08-ca0f-4a2f-9a29-b3db85d1881d
+root 7751 10524 0 Jul06 ? 00:00:13 sbd: watcher:
+/dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a - slot: 0 -
+uuid: a5ccce08-ca0f-4a2f-9a29-b3db85d1881d
 
-    root 8703 15058 0 20:39 pts/0 00:00:00 grep --color=auto sbd
+root 8703 15058 0 20:39 pts/0 00:00:00 grep --color=auto sbd
 
-    root 10524 1 0 Jul06 ? 00:00:20 sbd: inquisitor
+root 10524 1 0 Jul06 ? 00:00:20 sbd: inquisitor
 
-    root 10525 10524 0 Jul06 ? 00:00:14 sbd: watcher:
-    /dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15 - slot: 0 -
-    uuid: 3b79817c-673f-4794-8f06-7298ca77f893
+root 10525 10524 0 Jul06 ? 00:00:14 sbd: watcher:
+/dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15 - slot: 0 -
+uuid: 3b79817c-673f-4794-8f06-7298ca77f893
 
-    root 10528 10524 0 Jul06 ? 00:00:34 sbd: watcher: Pacemaker
+root 10528 10524 0 Jul06 ? 00:00:34 sbd: watcher: Pacemaker
 
-    root 10529 10524 0 Jul06 ? 00:00:11 sbd: watcher: Cluster
+root 10529 10524 0 Jul06 ? 00:00:11 sbd: watcher: Cluster
 
-    root 17439 10524 0 Jul06 ? 00:00:14 sbd: watcher:
-    /dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 - slot: 0 -
-    uuid: e8346aff-d136-47d3-8df8-1498f1d808c5
+root 17439 10524 0 Jul06 ? 00:00:14 sbd: watcher:
+/dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 - slot: 0 -
+uuid: e8346aff-d136-47d3-8df8-1498f1d808c5
 
-    dbvm01:~ #
+dbvm01:~ #
 ```
 
 Shows the current status of SBD Devices
 
 ```bash
-    dbvm01:~ # sbd -d
-    /dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15-d
-    /dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 -d
-    /dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a list
+dbvm01:~ # sbd -d
+/dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15-d
+/dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 -d
+/dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a list
 
-    0 dbvm01 clear
+0 dbvm01 clear
 
-    1 dbvm02 clear
+1 dbvm02 clear
 
-    0 dbvm01 clear
+0 dbvm01 clear
 
-    1 dbvm02 clear
+1 dbvm02 clear
 
-    0 dbvm01 clear
+0 dbvm01 clear
 
-    1 dbvm02 clear
+1 dbvm02 clear
 
-    dbvm01:~ #
+dbvm01:~ #
 
-    dbvm02:~ # sbd -d
-    /dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15-d
-    /dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 -d
-    /dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a list
+dbvm02:~ # sbd -d
+/dev/disk/by-id/scsi-36001405ecda67df212d4abc9bf326b15-d
+/dev/disk/by-id/scsi-3600140537a404333df942589ae07bcd7 -d
+/dev/disk/by-id/scsi-360014054d1e498d54bf43fa8419d5d6a list
 
-    0 dbvm01 clear
+0 dbvm01 clear
 
-    1 dbvm02 clear
+1 dbvm02 clear
 
-    0 dbvm01 clear
+0 dbvm01 clear
 
-    1 dbvm02 clear
+1 dbvm02 clear
 
-    0 dbvm01 clear
+0 dbvm01 clear
 
-    1 dbvm02 clear
+1 dbvm02 clear
 
-    dbvm02:~ #
+dbvm02:~ #
 ```
