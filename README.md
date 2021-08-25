@@ -6,9 +6,13 @@
 
 [Abstract](#abstract)
 
+[Document Links](#document-links)
+
 [Architecture](#architecture)
 
-[Document Links](#document-links)
+[Pacemaker Cluster Fencing](#pacemaker-cluster-fencing)
+
+[SBD overview](#sbd-overview)
 
 [Detailed Steps](#detailed-steps)
 
@@ -49,6 +53,16 @@ device name](#make-sure-that-the-iscsi-devices-are-available-and-note-down-the-d
 
 SAP on Azure Customer needs to switch the SBD Device Infrastructure (aka iSCSI VMs) for an SAP System, and below documentation outlines the steps to accomplish it.  In this case, the customer was moving to an availability zone based SBD architecture.
 
+# Document Links
+
+All the steps listed in our document are taken from below documentation.
+
+[Setting up Pacemaker on SUSE Linux Enterprise Server in Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-suse-pacemaker)
+
+[Replace SBD device in a running Pacemaker Cluster.](https://www.suse.com/support/kb/doc/?id=000018996)
+
+[Storage Protection and SBD](https://documentation.suse.com/sle-ha/12-SP4/html/SLE-HA-all/cha-ha-storage-protect.html#:~:text=SBD%20%28STONITH%20Block%20Device%29%20provides%20a%20node%20fencing,firmware%20version%20or%20dependencies%20on%20specific%20firmware%20controllers.)
+
 # Architecture
 
 In the below diagram, the SAP System's SLES Pacemaker Clusters (ASCS-ERS, Hana) are using SBD Set1(sbdvm01, sbdvm02, sbdvmo3) to provide iSCSI Target diks for the clusters.
@@ -71,18 +85,25 @@ different tiers.
 | Central Instance | ascsvm01 ersvm01 |
 | Database | dbvm01 dbvm02 |
 
-# Document Links
+# Pacemaker Cluster Fencing
 
-All the steps listed in our document are taken from below documentation.
+The first priority of a Pacemaker cluster is to protect the integrity of data, especially in disallowing uncoordinated concurrent access to data (aka. split brain). The cluster has several mechanisms for taking care of this when the whole infrastructure is working correctly.  However, when there is a network partition or software malfunction, the cluster needs a mechanism to prevent concurrent access to data.  Node fencing or "STONITH" (Shoot the other node in the head) is the primary mechanism to achieve this.  Essentially it is the ability for one cluster node to shutdown, kill or otherwise disable access to another cluster node.
 
-[Setting up Pacemaker on SUSE Linux Enterprise Server in Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/workloads/sap/high-availability-guide-suse-pacemaker)
+There are several STONITH mechanisms that can be used, which have their own requirements from the system infrastructure.  For example, on-premesis environments often provide the ability to shut off power to cluster nodes, using Power Distribution Units, Uninterruptible Power Supplies, and Lights-Out Devices. 
 
-[Replace SBD device in a running Pacemaker Cluster.](https://www.suse.com/support/kb/doc/?id=000018996)
+# SBD overview
+
+"Stonith Block Device" (SBD) is a fencing mechanism for Pacemaker clusters where nodes exchange messages via a shared disk device.  In this document we assume that the shared disks are accessed via iSCSI, and provided by a set of VMs that run the iSCSI target software to provide iSCSI access to a disk volume.
+
+This diagram shows a detailed view of two cluster nodes that have three SBD devices for redundant communication.
+
+![SBD Architecture](./media/sbd-overview0.png)
+
+Starting from the bottom, we are showing an architecture providing an iSCSI disk via one or more Linux VMs in Azure, that are running the iSCSI target software.  Each of these iSCSI disks are attached to from both of the clustered VMs which run the iSCSI initiator software that makes a remote iSCSI disk look like a locally attached disk device.  The SBD driver reads & writes messages to the iSCSI disk, and updates the watchdog driver as needed.  Finally, the watchdog driver is a Linux device driver that will reboot the VM if it does not get written to on a periodic basis. 
 
 # Detailed Steps
 
-We assume SBD iSCSI devices provided by Azure VMs are being used for fencing, in the SAP System
-Pacemaker Cluster setup.  
+We assume SBD iSCSI devices provided by Azure VMs are being used for fencing, in the SAP System Pacemaker Cluster setup.  
 
 ## Set up the new iSCSI Target Servers
 
